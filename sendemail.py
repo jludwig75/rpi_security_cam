@@ -63,9 +63,10 @@ class TimedRunLock(RunLock):
         return False
     def can_i_run(self):
         return self.check_can_run()
-    def run_complete(self):
+    def run_complete(self, run_success):
         logging.debug('marking run complete')
-        self.store_time()
+        if run_success:
+            self.store_time()
 
 class Gmailer:
     def __init__(self, gmail_account, gmail_password):
@@ -121,7 +122,7 @@ class EmailNotifier:
         self._settings = settings
         self._mailer = mailer
     def notify_motion_detected(self):
-        self._mailer.send_gmail(self._settings['TO_ADDRESS'],
+        return self._mailer.send_gmail(self._settings['TO_ADDRESS'],
                     subject='Motion Detected in Garage',
                     message='Motion was detected on camera in the garage. You should receive a video with the footage soon.')
     def send_recorded_video(self, movie_file_name):
@@ -134,6 +135,9 @@ class EmailNotifier:
                 os.unlink(movie_file_name)
             except Exception as e:
                 logging.error('Exception deleting video file %s: %s' % (movie_file_name, str(e)))
+            return True
+        else:
+            return False
 
 logging.basicConfig(filename='/var/log/motion/email.log',
                     level=logging.DEBUG,
@@ -164,8 +168,8 @@ if args.detected:
     with TimedRunLock(os.path.split(sys.argv[0])[-1], 15) as lock:
         if lock.can_i_run():
             logging.info('Sending email')
-            notifier.notify_motion_detected()
-            lock.run_complete()
+            notification_sent = notifier.notify_motion_detected()
+            lock.run_complete(notification_sent)
         else:
             logging.info("not sending email, because an email was sent within the last 15 seconds.")
 else:
