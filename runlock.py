@@ -1,6 +1,7 @@
 from lockfile import LockFile
 import logging
 import time
+import os
 
 class RunLock:
     def __init__(self, process_name):

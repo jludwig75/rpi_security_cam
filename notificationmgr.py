@@ -1,5 +1,7 @@
 from runlock import TimedRunLock
 import logging
+import os
+import sys
 
 class NotificationManager:
     def __init__(self, notifier):
@@ -12,7 +14,7 @@ class NotificationManager:
                 notification_sent = self._notifier.notify_motion_detected()
                 lock.run_complete(notification_sent)
             else:
-                logging.info("not sending email, because an email was sent within the last 15 seconds.")
+                logging.info("not sending email, because an email was already sent within the last 15 seconds.")
     def handle_movie_recorded(self, movie):
         logging.info('Video file "%s" captured. Sending email' % movie)
         self._notifier.send_recorded_video(movie)
