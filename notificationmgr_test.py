@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-import unittest
-import logging
-
 import sys
 import os
-
 sys.path.insert(0, os.path.abspath('test_overrides/'))
+
+import unittest
+import logging
 
 from notificationmgr import NotificationManager
 from runlock import allow_run, get_run_completed, get_run_success
