@@ -13,12 +13,11 @@ class EmailNotifier:
         if self._mailer.send_gmail_with_attached_file(self._settings['TO_ADDRESS'],
                     subject='Motion Video Captured in Garage',
                     message='Motion was recorded on camera in the garage. The video is attached.',
-                    file_name=args.movie):
+                    file_name=movie_file_name):
             logging.info('Video file %s successfully sent. Deleting video file form disk' % movie_file_name)
             try:
                 os.unlink(movie_file_name)
+                return True
             except Exception as e:
                 logging.error('Exception deleting video file %s: %s' % (movie_file_name, str(e)))
-            return True
-        else:
-            return False
+        return False
