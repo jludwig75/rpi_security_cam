@@ -10,7 +10,7 @@ from emailnotify import EmailNotifier
 from notificationmgr import NotificationManager
 from dummygmailer import DummyGMailer
 
-from runlock import allow_run, get_run_completed, get_run_success
+from runlock import allow_run
 
 
 class NotificationManagerEmailNotifierIntegrationTest(unittest.TestCase):
@@ -46,8 +46,6 @@ class NotificationManagerEmailNotifierIntegrationTest(unittest.TestCase):
         self.assertEqual(NotificationManagerEmailNotifierIntegrationTest.TEST_SETTINGS['TO_ADDRESS'], mailer.messages[0]['to'])
         self.assertTrue('Motion Detected' in mailer.messages[0]['subject'])
         self.assertTrue('Motion was detected' in mailer.messages[0]['message'])
-        self.assertTrue(get_run_completed())
-        self.assertTrue(get_run_success())
 
     def testHandleMotionDetectedDoesNotRequestSendEmailWhenRunlockDoesNotAllow(self):
         allow_run(False)
