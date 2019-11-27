@@ -1,3 +1,5 @@
 mail_settings.json
 settings.json
+dummy.msg
+email.log
 *.pyc
