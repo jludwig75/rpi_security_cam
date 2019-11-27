@@ -33,7 +33,7 @@ class SSLSMTPServer(SMTPServer, threading.Thread):
             msg_file.truncate(0)
     def process_message(self, peer, mailfrom, rcpttos, message_data):
         self._lock.acquire()
-        message_text = message_data.split('\n\n')[-1]
+        message_text = message_data.replace('\n', '')
         with open(self._message_file_name, 'at') as msg_file:
             msg_file.write(message_text + '\n')
         self._lock.release()
