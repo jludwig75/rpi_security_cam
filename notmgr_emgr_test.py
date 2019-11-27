@@ -8,7 +8,7 @@ import logging
 
 from emailnotify import EmailNotifier
 from notificationmgr import NotificationManager
-from dummygmailer import DummyGMailer
+from dummymailer import DummyMailer
 
 from runlock import allow_run
 
@@ -18,7 +18,7 @@ class NotificationManagerEmailNotifierIntegrationTest(unittest.TestCase):
 
     def testHandleVideoRecordedRequestsSendEmail(self):
         allow_run(True)
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         enotifier = EmailNotifier(NotificationManagerEmailNotifierIntegrationTest.TEST_SETTINGS, mailer)
         notmgr = NotificationManager(enotifier)
         self.assertEqual(0, len(mailer.messages))
@@ -35,7 +35,7 @@ class NotificationManagerEmailNotifierIntegrationTest(unittest.TestCase):
 
     def testHandleMotionDetectedRequestSendEmail(self):
         allow_run(True)
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         enotifier = EmailNotifier(NotificationManagerEmailNotifierIntegrationTest.TEST_SETTINGS, mailer)
         notmgr = NotificationManager(enotifier)
         self.assertEqual(0, len(mailer.messages))
@@ -49,7 +49,7 @@ class NotificationManagerEmailNotifierIntegrationTest(unittest.TestCase):
 
     def testHandleMotionDetectedDoesNotRequestSendEmailWhenRunlockDoesNotAllow(self):
         allow_run(False)
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         enotifier = EmailNotifier(NotificationManagerEmailNotifierIntegrationTest.TEST_SETTINGS, mailer)
         notmgr = NotificationManager(enotifier)
         self.assertEqual(0, len(mailer.messages))

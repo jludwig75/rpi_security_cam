@@ -5,13 +5,13 @@ import os
 import stat
 import sys
 from emailnotify import EmailNotifier
-from dummygmailer import DummyGMailer
+from dummymailer import DummyMailer
 
 
 class testEmaliNotifier(unittest.TestCase):
     TEST_SETTINGS = {'TO_ADDRESS': 'nobody@nowhere.com'}
     def testEmailSentWhenMotionDetected(self):
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         self.assertEqual(0, len(mailer.messages))
 
         enotifier = EmailNotifier(testEmaliNotifier.TEST_SETTINGS, mailer)
@@ -24,7 +24,7 @@ class testEmaliNotifier(unittest.TestCase):
         self.assertTrue('Motion was detected' in mailer.messages[0]['message'])
     
     def testnotify_motion_detectedReturnsFalseWhenEmailFailsToSend(self):
-        mailer = DummyGMailer(fail_sends = True)
+        mailer = DummyMailer(fail_sends = True)
         self.assertEqual(0, len(mailer.messages))
 
         enotifier = EmailNotifier(testEmaliNotifier.TEST_SETTINGS, mailer)
@@ -33,7 +33,7 @@ class testEmaliNotifier(unittest.TestCase):
         self.assertEqual(0, len(mailer.messages))
 
     def testEmailSentWithVideoWhenRecordedVideoSent(self):
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         self.assertEqual(0, len(mailer.messages))
 
         TEST_FILE_NAME = 'delme.test'
@@ -53,7 +53,7 @@ class testEmaliNotifier(unittest.TestCase):
         self.assertEqual(TEST_FILE_NAME, mailer.messages[0]['file_name'])
 
     def testsend_recorded_videoReturnsFalseWhenEmailFailsToSendAndFileNotDeleted(self):
-        mailer = DummyGMailer(fail_sends=True)
+        mailer = DummyMailer(fail_sends=True)
         self.assertEqual(0, len(mailer.messages))
 
         TEST_FILE_NAME = 'delme.test'
@@ -71,7 +71,7 @@ class testEmaliNotifier(unittest.TestCase):
         os.unlink(TEST_FILE_NAME)
 
     def testsend_recorded_videoReturnsFalseAndEmailIsSentWhenFileCannotBeDelete(self):
-        mailer = DummyGMailer()
+        mailer = DummyMailer()
         self.assertEqual(0, len(mailer.messages))
 
         # Make sure the test file does not exist.

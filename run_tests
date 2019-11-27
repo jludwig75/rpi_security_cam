@@ -1,0 +1,4 @@
+#!/bin/sh
+./notificationmgr_test.py
+./emailnotify_test.py
+./notmgr_emgr_test.py

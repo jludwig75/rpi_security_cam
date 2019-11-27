@@ -4,12 +4,17 @@ import json
 
 import argparse
 import logging
+import json
 
-from gmailer import Gmailer
+from mailer import Mailer
 from emailnotify import EmailNotifier
 from notificationmgr import NotificationManager
 
-if __name__ = '__main__':
+def load_json_settings_file(file_name):
+    with open(file_name, 'rt') as file:
+        return json.loads(file.read())
+
+if __name__ == '__main__':
     logging.basicConfig(filename='/var/log/motion/email.log',
                         level=logging.DEBUG,
                         format='%(asctime)s %(process)d %(levelname)-8s %(message)s')
@@ -25,15 +30,10 @@ if __name__ = '__main__':
     elif args.movie == None and not args.detected:
         logging.error('You must specify either -m or -d')
 
-    def load_gmail_settings():
-        with open('gmail_settings.json', 'r') as f:
-            settings = f.read()
-        return json.loads(settings)
-
-    settings = load_gmail_settings()
-    mailer = Gmailer(settings['GMAIL_ADDRESS'], settings['GMAIL_PASSWORD'])
+    settings = load_json_settings_file('settings.json')
+    mailer = Mailer('mail_settings.json', 'Raspberry Pi Security Camera', 'jr.ludwig.auto@gmail.com')
     notifier = EmailNotifier(settings, mailer)
-    manager = NotificationManager(mailer, notifier)
+    manager = NotificationManager(notifier)
     if args.detected:
         assert args.movie == None
         manager.handle_motion_detected()

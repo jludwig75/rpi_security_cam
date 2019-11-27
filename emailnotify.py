@@ -6,11 +6,11 @@ class EmailNotifier:
         self._settings = settings
         self._mailer = mailer
     def notify_motion_detected(self):
-        return self._mailer.send_gmail(self._settings['TO_ADDRESS'],
+        return self._mailer.send_mail(self._settings['TO_ADDRESS'],
                     subject='Motion Detected in Garage',
                     message='Motion was detected on camera in the garage. You should receive a video with the footage soon.')
     def send_recorded_video(self, movie_file_name):
-        if self._mailer.send_gmail_with_attached_file(self._settings['TO_ADDRESS'],
+        if self._mailer.send_mail_with_attached_file(self._settings['TO_ADDRESS'],
                     subject='Motion Video Captured in Garage',
                     message='Motion was recorded on camera in the garage. The video is attached.',
                     file_name=movie_file_name):
