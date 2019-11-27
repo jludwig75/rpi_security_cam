@@ -1,0 +1,8 @@
+[submodule "mailer"]
+	path = mailer
+	url = git@github.com:jludwig75/mailer.git
+	branch = master
+[submodule "secure-smtpd"]
+	path = secure-smtpd
+	url = git@github.com:jludwig75/secure-smtpd.git
+	branch = pwr-mgr-test
