@@ -19,7 +19,8 @@ SERVICE_USER_NAME = 'motion'
 
 def is_service_user():
     try:
-        return os.geteuid() == getpwnam(SERVICE_USER_NAME).pw_uid
+        # Root or service user name
+        return os.geteuid() == getpwnam(SERVICE_USER_NAME).pw_uid or os.getuid() == 0
     except:
         return False
 
