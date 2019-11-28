@@ -36,15 +36,16 @@ def load_json_settings_file(file_name):
         return json.loads(file.read())
 
 if __name__ == '__main__':
-    logging.basicConfig(filename=log_path('email.log'),
-                        level=logging.DEBUG,
-                        format='%(asctime)s %(process)d %(levelname)-8s %(message)s')
-    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
-
     parser = argparse.ArgumentParser(description='Send an email to respond to a camera motion event')
     parser.add_argument('-m', '--movie', type=str, default=None, help='video file recorded')
     parser.add_argument('-d', '--detected', action='store_true', default=False, help="motion detected")
+    parser.add_argument('-q', '--quiet', action='store_true', default=False, help="suppress debug output to stdout")
     args = parser.parse_args()
+
+    logging.basicConfig(filename=log_path('email.log'),
+                        level=logging.CRITICAL if args.quiet else logging.DEBUG,
+                        format='%(asctime)s %(process)d %(levelname)-8s %(message)s')
+    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
     if args.movie != None and args.detected:
         logging.error('You cannot specify -m and -d together')

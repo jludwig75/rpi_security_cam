@@ -22,7 +22,7 @@ class RpiSecurityCamTest(unittest.TestCase):
 
     def testMotionDetectedSendsEmail(self):
         # test
-        os.system('./sendemail.py -d')
+        os.system('./sendemail.py -q -d')
 
         # test validation
         messages = self._smtp_server.pop_messages()
@@ -37,7 +37,7 @@ class RpiSecurityCamTest(unittest.TestCase):
         self.assertTrue(os.path.exists(TEST_ATTACHMENT_FILE_NAME))
 
         # test
-        os.system('./sendemail.py -m %s' % TEST_ATTACHMENT_FILE_NAME)
+        os.system('./sendemail.py -q -m %s' % TEST_ATTACHMENT_FILE_NAME)
 
         # test validation
         messages = self._smtp_server.pop_messages()
