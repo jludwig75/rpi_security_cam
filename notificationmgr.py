@@ -4,11 +4,12 @@ import os
 import sys
 
 class NotificationManager:
-    def __init__(self, notifier):
+    def __init__(self, notifier, run_local=False):
         self._notifier = notifier
+        self._run_local = run_local
     def handle_motion_detected(self):
         logging.info('Motion detected.')
-        with TimedRunLock(os.path.split(sys.argv[0])[-1], 15) as lock:
+        with TimedRunLock(os.path.split(sys.argv[0])[-1], 15, use_local_dir=self._run_local) as lock:
             if lock.can_i_run():
                 logging.info('Sending email')
                 notification_sent = self._notifier.notify_motion_detected()

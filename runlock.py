@@ -19,10 +19,10 @@ class RunLock:
         self._lock.release()
 
 class TimedRunLock(RunLock):
-    def __init__(self, process_name, min_run_interval):
+    def __init__(self, process_name, min_run_interval, use_local_dir=False):
         RunLock.__init__(self, process_name)
         self._process_name = process_name
-        self._time_file_name = '/var/lock/%s.time' % self._process_name
+        self._time_file_name = '%s/%s.time' % ('.' if use_local_dir else '/var/lock', self._process_name)
         self._min_run_interval = min_run_interval
     def store_time(self, t = None):
         if t == None:

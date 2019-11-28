@@ -13,7 +13,7 @@ def get_run_success():
     return run_success
 
 class TimedRunLock:
-    def __init__(self, process_name, min_run_interval):
+    def __init__(self, process_name, min_run_interval, use_local_dir=False):
         global run_completed
         global run_success
         run_completed = False

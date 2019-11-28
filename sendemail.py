@@ -6,23 +6,27 @@ import argparse
 import logging
 import json
 import os
+from pwd import getpwnam
 
 from mailer import Mailer
 from emailnotify import EmailNotifier
 from notificationmgr import NotificationManager
 
-#ROOT_SETTINGS_PATH = '/etc/rpi-cam'
-ROOT_SETTINGS_PATH = '.'
+ROOT_SETTINGS_PATH = '/etc/rpi-cam'
 ROOT_LOG_PATH = '/var/log/motion'
+SERVICE_USER_NAME = 'motion'
+
+def is_service_user():
+    return os.geteuid() == getpwnam(SERVICE_USER_NAME).pw_uid
 
 def settings_path(path):
-    if os.geteuid() == 0:
+    if is_service_user():
         return os.path.join(ROOT_SETTINGS_PATH, path)
     else:
         return os.path.join(os.path.dirname(sys.argv[0]), path)
 
 def log_path(path):
-    if os.geteuid() == 0:
+    if is_service_user():
         return os.path.join(ROOT_LOG_PATH, path)
     else:
         return os.path.join(os.path.dirname(sys.argv[0]), path)
@@ -47,10 +51,10 @@ if __name__ == '__main__':
     elif args.movie == None and not args.detected:
         logging.error('You must specify either -m or -d')
 
-    settings = load_json_settings_file('settings.json')
-    mailer = Mailer('mail_settings.json', 'Raspberry Pi Security Camera', 'jr.ludwig.auto@gmail.com')
+    settings = load_json_settings_file(settings_path('settings.json'))
+    mailer = Mailer(settings_path('mail_settings.json'), 'Raspberry Pi Security Camera', 'jr.ludwig.auto@gmail.com')
     notifier = EmailNotifier(settings, mailer)
-    manager = NotificationManager(notifier)
+    manager = NotificationManager(notifier, run_local=not is_service_user())
     if args.detected:
         assert args.movie == None
         manager.handle_motion_detected()

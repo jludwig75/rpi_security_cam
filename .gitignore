@@ -2,4 +2,5 @@ mail_settings.json
 settings.json
 dummy.msg
 email.log
+sendemail.py.time
 *.pyc

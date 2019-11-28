@@ -13,11 +13,12 @@ class RpiSecurityCamTest(unittest.TestCase):
 
     def setUp(self):
         os.system('cp mail_settings.test.json mail_settings.json')
-        self._cleanup_file('/var/lock/sendemail.py.time')
+        os.system('cp settings.template.json settings.json')
+        self._cleanup_file('sendemail.py.time')
         messages = self._smtp_server.pop_messages()
 
     def tearDown(self):
-        self._cleanup_file('/var/lock/sendemail.py.time')
+        self._cleanup_file('sendemail.py.time')
 
     def testMotionDetectedSendsEmail(self):
         # test
