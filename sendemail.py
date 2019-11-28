@@ -43,6 +43,7 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--movie', type=str, default=None, help='video file recorded')
     parser.add_argument('-d', '--detected', action='store_true', default=False, help="motion detected")
     parser.add_argument('-q', '--quiet', action='store_true', default=False, help="suppress debug output to stdout")
+    parser.add_argument('-c', '--catch-up', type=str, default=None, help="catch up uploading old videos")
     args = parser.parse_args()
 
     logging.basicConfig(filename=log_path('email.log'),
@@ -50,10 +51,18 @@ if __name__ == '__main__':
                         format='%(asctime)s %(process)d %(levelname)-8s %(message)s')
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
-    if args.movie != None and args.detected:
-        logging.error('You cannot specify -m and -d together')
-    elif args.movie == None and not args.detected:
-        logging.error('You must specify either -m or -d')
+    actions_specified = 0
+    if args.detected:
+        actions_specified += 1
+    if args.movie != None:
+        actions_specified += 1
+    if args.catch_up != None:
+        actions_specified += 1
+
+    if actions_specified > 1:
+        logging.error('You can only specify one of either -m, -d or -c')
+    elif actions_specified == 0:
+        logging.error('You must specify one of either -m, -d or -c')
 
     settings = load_json_settings_file(settings_path('settings.json'))
     mailer = Mailer(settings_path('mail_settings.json'), 'Raspberry Pi Security Camera', 'jr.ludwig.auto@gmail.com')
@@ -62,7 +71,10 @@ if __name__ == '__main__':
     if args.detected:
         assert args.movie == None
         manager.handle_motion_detected()
-    else:
+    elif args.movie != None:
         assert not args.detected
         assert args.movie != None
         manager.handle_movie_recorded(args.movie)
+    else:
+        sys.stderr.write('Action not supported\n')
+        sys.exit(-1)

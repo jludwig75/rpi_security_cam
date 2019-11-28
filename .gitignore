@@ -3,4 +3,5 @@ settings.json
 dummy.msg
 email.log
 sendemail.py.time
+test_file*.mkv
 *.pyc
