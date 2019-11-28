@@ -43,7 +43,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     logging.basicConfig(filename=log_path('email.log'),
-                        level=logging.CRITICAL if args.quiet else logging.DEBUG,
+                        level=logging.CRITICAL if args.quiet else logging.INFO,
                         format='%(asctime)s %(process)d %(levelname)-8s %(message)s')
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 

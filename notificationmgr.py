@@ -11,7 +11,7 @@ class NotificationManager:
         logging.info('Motion detected.')
         with TimedRunLock(os.path.split(sys.argv[0])[-1], 15, use_local_dir=self._run_local) as lock:
             if lock.can_i_run():
-                logging.info('Sending email')
+                logging.info('Sending notification email')
                 notification_sent = self._notifier.notify_motion_detected()
                 lock.run_complete(notification_sent)
             else:
