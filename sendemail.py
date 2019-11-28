@@ -11,6 +11,7 @@ from pwd import getpwnam
 from mailer import Mailer
 from emailnotify import EmailNotifier
 from notificationmgr import NotificationManager
+from videoupdater import VideoUpdater
 
 ROOT_SETTINGS_PATH = '/etc/rpi-cam'
 ROOT_LOG_PATH = '/var/log/motion'
@@ -68,6 +69,7 @@ if __name__ == '__main__':
     mailer = Mailer(settings_path('mail_settings.json'), 'Raspberry Pi Security Camera', 'jr.ludwig.auto@gmail.com')
     notifier = EmailNotifier(settings, mailer)
     manager = NotificationManager(notifier, run_local=not is_service_user())
+    updater = VideoUpdater(notifier)
     if args.detected:
         assert args.movie == None
         manager.handle_motion_detected()
@@ -75,6 +77,8 @@ if __name__ == '__main__':
         assert not args.detected
         assert args.movie != None
         manager.handle_movie_recorded(args.movie)
+    elif args.catch_up != None:
+        updater.catch_up_videos(args.catch_up)
     else:
         sys.stderr.write('Action not supported\n')
         sys.exit(-1)
