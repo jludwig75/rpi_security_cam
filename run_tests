@@ -3,4 +3,4 @@
 ./emailnotify_test.py
 ./notmgr_emgr_test.py
 ./rpi_security_cam_test.py
-
+./videoupdater_test.py

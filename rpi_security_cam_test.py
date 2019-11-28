@@ -22,6 +22,8 @@ class RpiSecurityCamTest(unittest.TestCase):
 
     def tearDown(self):
         self._cleanup_file('sendemail.py.time')
+        if os.path.exists('test_file*.mkv'):
+            os.system('rm test_file*.mkv')
 
     def testMotionDetectedSendsEmail(self):
         # test
