@@ -17,7 +17,10 @@ ROOT_LOG_PATH = '/var/log/motion'
 SERVICE_USER_NAME = 'motion'
 
 def is_service_user():
-    return os.geteuid() == getpwnam(SERVICE_USER_NAME).pw_uid
+    try:
+        return os.geteuid() == getpwnam(SERVICE_USER_NAME).pw_uid
+    except:
+        return False
 
 def settings_path(path):
     if is_service_user():
