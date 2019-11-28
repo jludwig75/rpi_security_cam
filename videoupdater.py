@@ -11,9 +11,10 @@ class VideoUpdater:
         now = time.time()
         for file_name in os.listdir(video_dir):
             if file_name.endswith('.mkv'):
+                file_name = os.path.join(video_dir, file_name)
                 mtime = os.path.getmtime(file_name)
                 if mtime < now - 5 * 60:
                     logging.info('file "%s" is older than 5 minutes. Sending video.')
-                    self._notifier.send_recorded_video(os.path.join(video_dir, file_name), event_time=datetime.fromtimestamp(mtime))
+                    self._notifier.send_recorded_video(file_name, event_time=datetime.fromtimestamp(mtime))
                 else:
                     logging.info('file "%s" is newer than 5 minutes. Not sending video now.')
