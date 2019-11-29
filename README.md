@@ -16,3 +16,5 @@ Setup
 
 If you are using gmail, setup the sending gmail account to "Allow less secure apps" I used a separate gmail account just for sending so I didn't have to set this on my general use account.
 
+Use /var/log/motion/email.log to debug the scripts
+
