@@ -1,0 +1,4 @@
+#!/bin/sh
+rm -rf /opt/rpi_security_cam
+mkdir /opt/rpi_security_cam
+cp -a * /opt/rpi_security_cam
