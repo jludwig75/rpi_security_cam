@@ -10,5 +10,6 @@ Setup
 - git clone https://github.com/jludwig75/rpi_security_cam.git
 - cd rpi_security_cam
 - git submodule update --init --recursive
+- ./run_tests - Make sure all tests pass
 - sudo ./install
 - edit settings.json and mail_settings.json in /etc/rpi-cam/ with correct settings
