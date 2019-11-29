@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo -u motion /opt/rpi_security_cam/sendemail.py -c /motion
