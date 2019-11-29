@@ -1,0 +1,10 @@
+/var/log/motion/email.log
+{
+	rotate 7
+	daily
+	missingok
+	notifempty
+	compress
+	delaycompress
+	size 1000000
+}
