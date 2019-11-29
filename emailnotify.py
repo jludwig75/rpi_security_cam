@@ -2,7 +2,7 @@ import os
 import logging
 from datetime import datetime
 
-EMAIL_TIME_FORMAT = '%a %m-%d-%Y %H:%M%S'
+EMAIL_TIME_FORMAT = '%a %m-%d-%Y %H:%M:%S'
 
 class EmailNotifier:
     def __init__(self, settings, mailer):
