@@ -7,8 +7,8 @@ Scripts to add email notification to the motion service.
 - Also runs an hourly cron job to cleanup videos that could not be enailed due to any errors
 
 Setup
-- clone repo
-- cd <repo name>
+- git clone https://github.com/jludwig75/rpi_security_cam.git
+- cd rpi_security_cam
 - git submodule update --init --recursive
 - sudo ./install
 - edit settings.json and mail_settings.json in /etc/rpi-cam/ with correct settings
