@@ -1,4 +1,2 @@
-
 on_motion_detected /opt/rpi_security_cam/sendemail.py -d
 on_movie_end /opt/rpi_security_cam/sendemail.py -m %f
-

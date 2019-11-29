@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+import os
+import sys
+
+patch_lines = {}
+with open(sys.argv[2], 'rt') as file:
+    for line in file:
+        if len(line.strip()) > 0:
+            patch_lines[line.strip().split()[0]] = line.strip()
+
+with open(sys.argv[1], 'rt') as file:
+    for line in file:
+        line = line[:-1]
+        for start, replace in patch_lines.iteritems():
+            if line.startswith(start):
+                line = replace
+                del patch_lines[start]
+                break
+        print line
+
+for key, value in patch_lines.iteritems():
+    print value
