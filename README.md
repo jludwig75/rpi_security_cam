@@ -1,6 +1,6 @@
 # rpi_security_cam
 
-Scripts to add email notification for the motion service.
+Scripts to add email notification to the motion service.
 
 - Sends an email when motion is detected
 - Sends an with recorded video attached
