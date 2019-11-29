@@ -1,0 +1,7 @@
+#!/bin/sh
+rm -rf /opt/rpi_security_cam
+mkdir /opt/rpi_security_cam
+cp -a * /opt/rpi_security_cam
+cp logrotate/rpisc /etc/logrotate.d
+cp cron.hourly/rpisc-cleanup /etc/cron.hourly
+
