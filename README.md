@@ -13,5 +13,6 @@ Setup
 - ./run_tests - Make sure all tests pass
 - sudo ./install
 - edit settings.json and mail_settings.json in /etc/rpi-cam/ with correct settings
+
 If you are using gmail, setup the sending gmail account to "Allow less secure apps" I used a separate gmail account just for sending so I didn't have to set this on my general use account.
 
