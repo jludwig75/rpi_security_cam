@@ -7,3 +7,6 @@ cp cron.hourly/rpisc-cleanup /etc/cron.hourly
 ./patch-logfile /etc/motion/motion.conf motion.conf.append > motion.conf
 cp motion.conf /etc/motion
 rm motion.conf
+mkdir -p /etc/rpi-cam/
+cp settings.template.json /etc/rpi-cam/settings.json
+cp mail_settings.template.json /etc/rpi-cam/mail_settings.json
